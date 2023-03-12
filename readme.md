@@ -1,0 +1,1 @@
+First task for this bot is to be able to check pvp experience of players via battle.net API.
