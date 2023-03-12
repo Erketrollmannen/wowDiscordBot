@@ -3,6 +3,8 @@ from dotenv import load_dotenv
 import os
 load_dotenv()  # take environment variables from .env.
 
+from apiHandler import getData
+
 token = os.getenv("discordbotToken")
 
 
@@ -29,14 +31,18 @@ async def on_message(message):
     if message.content.startswith('!check'):
         print(message.content)
         charlookup = message.content.replace('-'," ")
-        print(charlookup)
         username = charlookup.split(' ')[1]
         server = charlookup.split(' ')[2]
+        ratingexp = lookup(username, server)
+        print(ratingexp)
 
-        print("username: "+username, "\n" "server: "+server)
-
+        await message.channel.send(f"{username}-{server} {ratingexp}")
 
 def lookup(username, server):
-    
+        
+
+        rating = getData(username, server)
+        return rating
+
 
 client.run(token)
