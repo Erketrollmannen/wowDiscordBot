@@ -46,11 +46,20 @@ async def on_message(message):
 def lookup(username, server):
         
 
-        rating = getData(username, server)
-        return rating
+    rating = getData(username, server)
+    return rating
 
 
-@tree.command(name = "check", description = "check pvp exp of player, eg:'oxano-stormscale'", guild=discord.Object(id=dGuildIdOxanoVIP)) #Add the guild ids in which the slash command will appear. If it should be in all, remove the argument, but note that it will take some time (up to an hour) to register the command if it's for all guilds.
+@tree.command(
+    name = "check",
+    description = "check pvp exp of player, eg:'oxano-stormscale'",
+    guild=discord.Object(id=dGuildIdOxanoVIP))
+
+#Add the guild ids in which the slash command will appear.
+#If it should be in all, remove the argument,
+#but note that it will take some time (up to an hour)
+#to register the command if it's for all guilds.
+
 async def first_command(interaction, player: str):
     print(player)
     charlookup = player.lower()
