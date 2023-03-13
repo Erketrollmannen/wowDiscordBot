@@ -1,4 +1,5 @@
 import discord
+from discord import app_commands
 from dotenv import load_dotenv
 import os
 load_dotenv()  # take environment variables from .env.
@@ -6,12 +7,15 @@ load_dotenv()  # take environment variables from .env.
 from apiHandler import getData
 
 token = os.getenv("discordbotToken")
+dGuildIdOxanoVIP = os.getenv("dGuildIdOxanoVIP")
 
 
 intents = discord.Intents.default()
 intents.message_content = True
 
+
 client = discord.Client(intents=intents)
+tree = app_commands.CommandTree(client)
 
 @client.event
 async def on_ready():
@@ -31,12 +35,13 @@ async def on_message(message):
     if message.content.startswith('!check'):
         print(message.content)
         charlookup = message.content.replace('-'," ")
-        username = charlookup.split(' ')[1]
+        username = charlookup.split(' ')[1] #1 because there is "!check" command in front of it.
         server = charlookup.split(' ')[2]
+        print(username, server)
         ratingexp = lookup(username, server)
         print(ratingexp)
 
-        await message.channel.send(f"{username}-{server} {ratingexp}")
+        await message.channel.send(f"{username}-{server}: {ratingexp}")
 
 def lookup(username, server):
         
@@ -44,5 +49,24 @@ def lookup(username, server):
         rating = getData(username, server)
         return rating
 
+
+@tree.command(name = "check", description = "check pvp exp of player, eg:'oxano-stormscale'", guild=discord.Object(id=dGuildIdOxanoVIP)) #Add the guild ids in which the slash command will appear. If it should be in all, remove the argument, but note that it will take some time (up to an hour) to register the command if it's for all guilds.
+async def first_command(interaction, player: str):
+    print(player)
+    charlookup = player.lower()
+    charlookup = charlookup.replace('-'," ", 1)
+    username = charlookup.split(' ')[0] #0 because there is no "!check" command in front of it.
+    server = charlookup.split(' ')[1]
+    print(username, server)
+    ratingexp = lookup(username, server)
+    print(ratingexp)
+
+    await interaction.response.send_message(f"{username}-{server}: {ratingexp}")
+
+
+@client.event
+async def on_ready():
+    await tree.sync(guild=discord.Object(id=dGuildIdOxanoVIP))
+    print("Ready!")
 
 client.run(token)

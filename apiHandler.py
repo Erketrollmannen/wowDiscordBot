@@ -26,7 +26,7 @@ def getData(username, server):
     #username = input("Enter your username: ")
     #server = input("Enter your server: ")
     endpoint = f"https://eu.api.blizzard.com/profile/wow/character/{server}/{username}/achievements/statistics?namespace=profile-eu&locale=en_GB"
-
+                 #https://eu.api.blizzard.com/profile/wow/character/stormscale/nightsadow/achievements/statistics?namespace=profile-eu&locale=en_GB&access_token=EUse0xyqqsgQGRGG9Yzfv1PQ6rlH7SQfqm
     # Define headers with access token and other parameters
     headers = {
         "Authorization": f"Bearer {access_token}",
@@ -47,16 +47,3 @@ def getData(username, server):
     cleanData = cleanup()
     return cleanData
     #print(json.dumps(character_data, indent=4))
-
-'''for i in character_data["categories"]:
-    if i["id"] == 21:
-        sub_cat = i["sub_categories"]
-        break
-
-filtered_data = list()
-for i in sub_cat[0]["statistics"]:
-    if i["id"] == 595:
-        filtered_data.append(i)
-    if i["id"] == 370:
-        filtered_data.append(i)
-print(filtered_data)'''
