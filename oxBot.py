@@ -3,7 +3,7 @@ from discord import app_commands
 from dotenv import load_dotenv
 import os
 load_dotenv()  # take environment variables from .env.
-
+from dataHandler import nameFormat
 from apiHandler import getData
 
 token = os.getenv("discordbotToken")
@@ -61,12 +61,10 @@ def lookup(username, server):
 #to register the command if it's for all guilds.
 
 async def first_command(interaction, player: str):
-    print(player)
-    charlookup = player.lower()
-    charlookup = charlookup.replace('-'," ", 1)
-    username = charlookup.split(' ')[0] #0 because there is no "!check" command in front of it.
-    server = charlookup.split(' ')[1]
-    print(username, server)
+    playerServer = player
+    playerServer = nameFormat(player)
+    username = playerServer[0]
+    server = playerServer[1]
     ratingexp = lookup(username, server)
     print(ratingexp)
 

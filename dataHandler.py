@@ -32,5 +32,18 @@ def cleanup():
         print("Error")
         return "Error: either 0 exp, or something went wrong"
 
+def nameFormat(playerserver):
+    # make all variables lower case
+    server = None
+    playerserver = playerserver.lower()
+    player = playerserver.split("-")[0]
+    server = playerserver.split("-")[1]
+    try:
+        server = server.replace("'", "")
+    
+    finally:
+        print("player:",player,"server:",server)
+        return player,server
+
 if __name__ == '__main__':
-    cleanup()
+    nameFormat(str(input("insert name and server name: ")))
