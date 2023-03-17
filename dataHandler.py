@@ -38,7 +38,10 @@ def nameFormat(playerserver):
     playerserver = playerserver.lower()
     player = playerserver.split("-")[0]
     server = playerserver.split("-")[1]
+    
     try:
+
+        server = server.replace(" ", "-")
         server = server.replace("'", "")
     
     finally:

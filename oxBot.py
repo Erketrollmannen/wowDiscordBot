@@ -65,10 +65,11 @@ async def first_command(interaction, player: str):
     playerServer = nameFormat(player)
     username = playerServer[0]
     server = playerServer[1]
+    print(username, server)
     ratingexp = lookup(username, server)
     print(ratingexp)
 
-    await interaction.response.send_message(f"{username}-{server}: {ratingexp}")
+    await interaction.response.send_message(f"{player}: {ratingexp}")
 
 
 @client.event

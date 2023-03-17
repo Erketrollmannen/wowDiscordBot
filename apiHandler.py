@@ -26,7 +26,7 @@ def getData(username, server):
     #username = input("Enter your username: ")
     #server = input("Enter your server: ")
     endpoint = f"https://eu.api.blizzard.com/profile/wow/character/{server}/{username}/achievements/statistics?namespace=profile-eu&locale=en_GB"
-                 #https://eu.api.blizzard.com/profile/wow/character/stormscale/nightsadow/achievements/statistics?namespace=profile-eu&locale=en_GB&access_token=EUse0xyqqsgQGRGG9Yzfv1PQ6rlH7SQfqm
+                 #https://eu.api.blizzard.com/profile/wow/character/stormscale/nightsadow/pvp-bracket/shuffle-warrior-arms?namespace=profile-eu&locale=en_GB"
     # Define headers with access token and other parameters
     headers = {
         "Authorization": f"Bearer {access_token}",
