@@ -1,9 +1,7 @@
 import json
 
 
-
-
-def cleanup():
+def highestArenaExp():
     try:
         with open('data.json', 'r') as f:
             data = json.load(f)

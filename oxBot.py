@@ -4,7 +4,11 @@ from dotenv import load_dotenv
 import os
 load_dotenv()  # take environment variables from .env.
 from dataHandler import nameFormat
-from apiHandler import getData
+from apiHandler import lookup
+
+
+
+
 
 token = os.getenv("discordbotToken")
 dGuildIdOxanoVIP = os.getenv("dGuildIdOxanoVIP")
@@ -17,9 +21,11 @@ intents.message_content = True
 client = discord.Client(intents=intents)
 tree = app_commands.CommandTree(client)
 
+
 @client.event
 async def on_ready():
     print(f'We have logged in as {client.user}')
+
 
 @client.event
 async def on_message(message):
@@ -34,20 +40,16 @@ async def on_message(message):
 
     if message.content.startswith('!check'):
         print(message.content)
-        charlookup = message.content.replace('-'," ")
-        username = charlookup.split(' ')[1] #1 because there is "!check" command in front of it.
-        server = charlookup.split(' ')[2]
+        playerServer = message.content.replace('-'," ")
+        playerServer = playerServer.lower()
+        username = playerServer.split(' ')[1] #1 because there is "!check" command in front of it.
+        server = playerServer.split(' ')[2]
+
         print(username, server)
         ratingexp = lookup(username, server)
         print(ratingexp)
 
         await message.channel.send(f"{username}-{server}: {ratingexp}")
-
-def lookup(username, server):
-        
-
-    rating = getData(username, server)
-    return rating
 
 
 @tree.command(
@@ -65,11 +67,14 @@ async def first_command(interaction, player: str):
     playerServer = nameFormat(player)
     username = playerServer[0]
     server = playerServer[1]
-    print(username, server)
+    #print(username, server)
     ratingexp = lookup(username, server)
-    print(ratingexp)
+    print(type(ratingexp))
 
-    await interaction.response.send_message(f"{player}: {ratingexp}")
+    message = "\n".join(ratingexp)
+    #print(type(message))
+    await interaction.response.send_message(message)
+    #await interaction.response.send_message(f"{player}: {ratingexp}")
 
 
 @client.event
